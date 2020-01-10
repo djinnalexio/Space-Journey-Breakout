@@ -13,6 +13,7 @@ public class Ball : MonoBehaviour
     [Header("Launch Paramaters")]
     [SerializeField] float xPush = 5f;
     [SerializeField] float yPush = 5f;
+    [SerializeField] public float ballSpeed = 5f;
 
     [Header("Randomization")]
     [Space(10)]
@@ -29,6 +30,7 @@ public class Ball : MonoBehaviour
     AudioSource ballAudioSource;
     GameSession gameSession;
 
+    new Rigidbody2D rigidbody;
     
     // Start is called before the first frame update
     void Start()
@@ -36,12 +38,14 @@ public class Ball : MonoBehaviour
         playerToBallVector = transform.position - player1.transform.position;
         ballAudioSource = GetComponent<AudioSource>();
         gameSession = FindObjectOfType<GameSession>();
+        rigidbody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (lockedBall) { HoldBall(); LaunchBall(); }
+        rigidbody.velocity = ballSpeed * (rigidbody.velocity.normalized);
     }
 
     private void LaunchBall()
@@ -49,7 +53,7 @@ public class Ball : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || gameSession.GetAutoplay())
         {
             lockedBall = false;
-            GetComponent<Rigidbody2D>().velocity = new Vector2(xPush, yPush);
+            rigidbody.velocity = new Vector2(xPush, yPush);
         }
     }
 

@@ -295,6 +295,7 @@ MonoBehaviour:
   player1: {fileID: 4550691731330311087}
   xPush: 0
   yPush: 10
+  ballSpeed: 6
   RandomContactFactor: 1.5
   ballContactSounds: []
 --- !u!1 &4514689193712673852
