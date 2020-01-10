@@ -295,7 +295,7 @@ MonoBehaviour:
   player1: {fileID: 4550691731330311087}
   xPush: 0
   yPush: 10
-  ballSpeed: 6
+  ballSpeed: 7
   RandomContactFactor: 1.5
   ballContactSounds: []
 --- !u!1 &4514689193712673852
@@ -417,7 +417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScreenWidthUnits: 32
   playerRange: 6.15
-  offsetMultiplier: 5
+  offsetMultiplier: 7
   autoplayRandomOffset: 0
 --- !u!60 &9100330026020570607
 PolygonCollider2D:
