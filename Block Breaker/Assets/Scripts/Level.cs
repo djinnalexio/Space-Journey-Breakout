@@ -58,7 +58,7 @@ public class Level : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PauseGame();
+        if (Input.GetMouseButtonDown(1)) PauseGame();
     }
 
     //Block Functions
@@ -72,16 +72,15 @@ public class Level : MonoBehaviour
     //Pause System
     void PauseGame()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (pauseOn)
         {
-            if (pauseOn) {
-                Time.timeScale = gameSpeed;//unpause
-                pauseOn = false;
-            }
-            else {
-                Time.timeScale = 0;//pause
-                pauseOn = true;
-            }
+            Time.timeScale = gameSpeed;//unpause
+            pauseOn = false;
+        }
+        else
+        {
+            Time.timeScale = 0;//pause
+            pauseOn = true;
         }
     }
 
