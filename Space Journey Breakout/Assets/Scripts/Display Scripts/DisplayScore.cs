@@ -31,9 +31,9 @@ public class DisplayScore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentLevel.text = "Stage " + gameStatus.GetLevelCount().ToString();
-        currentScore.text = gameStatus.GetCurrentScore().ToString("D7");
-        highScore.text = gameStatus.GetHighScore().ToString("D7");
+        currentLevel.text = "Stage " + GameSession.levelCount.ToString();
+        currentScore.text = GameSession.currentScore.ToString("D7");
+        highScore.text = GameSession.highScore.ToString("D7");
         DisplayCombo();
     }
 

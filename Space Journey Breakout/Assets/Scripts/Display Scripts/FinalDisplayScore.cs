@@ -35,12 +35,9 @@ public class FinalDisplayScore : MonoBehaviour
     [SerializeField] TextMeshProUGUI yourLevel;
     [SerializeField] TextMeshProUGUI highestLevel;
 
-    GameSession gameStatus;
-
     // Start is called before the first frame update
     void Start()
     {
-        gameStatus = FindObjectOfType<GameSession>();
         DisplaySessionScore();
         DisplaySessionCombo();
         DisplaySessionLevel();
@@ -49,10 +46,10 @@ public class FinalDisplayScore : MonoBehaviour
 
     private void DisplaySessionScore()
     {
-        yourScore.text = gameStatus.GetCurrentScore().ToString("D7");
-        highScore.text = gameStatus.GetPreviousHighScore().ToString("D7");
+        yourScore.text = GameSession.currentScore.ToString("D7");
+        highScore.text = GameSession.previousHighScore.ToString("D7");
 
-        if (gameStatus.GetCurrentScore() > gameStatus.GetPreviousHighScore())//beat highscore
+        if (GameSession.currentScore > GameSession.previousHighScore)//beat highscore
         {
             yourScoreHeading.text = "New High Score";
             highScoreHeading.text = "Previous High Score";            
@@ -65,10 +62,10 @@ public class FinalDisplayScore : MonoBehaviour
     }
     private void DisplaySessionCombo()
     {
-        yourCombo.text = gameStatus.GetHighCombo().ToString();
-        highestCombo.text = gameStatus.GetPreviousHighCombo().ToString();
+        yourCombo.text = GameSession.highCombo.ToString();
+        highestCombo.text = GameSession.previousHighCombo.ToString();
 
-        if (gameStatus.GetHighCombo() > gameStatus.GetPreviousHighCombo())//beat highscore
+        if (GameSession.highCombo > GameSession.previousHighCombo)//beat highscore
         {
             yourComboHeading.text = "New Combo Record";
             highComboHeading.text = "Previous Combo";
@@ -81,10 +78,10 @@ public class FinalDisplayScore : MonoBehaviour
     }
     private void DisplaySessionLevel()
     {
-        yourLevel.text = gameStatus.GetLevelCount().ToString();
-        highestLevel.text = gameStatus.GetPreviousHighLevel().ToString();
+        yourLevel.text = GameSession.levelCount.ToString();
+        highestLevel.text = GameSession.previouslevelCount.ToString();
 
-        if (gameStatus.GetLevelCount() > gameStatus.GetPreviousHighLevel())//beat level
+        if (GameSession.levelCount > GameSession.previouslevelCount)//beat level
         {
             yourLevelHeading.text = "New Level Reached";
             highLevelHeading.text = "Previous Record";

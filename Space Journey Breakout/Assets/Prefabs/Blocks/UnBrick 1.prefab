@@ -46,13 +46,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60d23e9b4e37da5449b385ff094d0ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockPhases:
-  - {fileID: 21300000, guid: 6b7fb791a0f98e440b630e3d1ecc9e7b, type: 3}
   breakable: 0
   blockPoints: 0
+  blockPhases:
+  - {fileID: 21300000, guid: 6b7fb791a0f98e440b630e3d1ecc9e7b, type: 3}
   blockBreakSFX: {fileID: 0}
   blockBreakVFX: {fileID: 0}
-  ParticlesTime: 0
+  particlesTime: 1
+  blockBreakFlash: {fileID: 0}
+  flashTime: 0.1
+  maxColorReduction: 0.6
 --- !u!212 &1600737216657234129
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -67,7 +70,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

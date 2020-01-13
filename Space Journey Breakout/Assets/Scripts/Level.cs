@@ -12,11 +12,11 @@ public class Level : MonoBehaviour
     [Range(0, 10)] [SerializeField] float gameSpeed = 1f;
     [Range(0, 1)] [SerializeField] float winSlowMotion = .5f;
 
-    public int breakableBlocks = 0;
+    int breakableBlocks = 0;
     int comboCount = 0;
     
     static int currentLayoutIndex = 0;
-    public bool pauseOn = false;
+    public bool isPaused = false;
 
     public void LostLife(bool justLostLife) { lostALife = justLostLife; }
     static bool lostALife = false;
@@ -30,58 +30,64 @@ public class Level : MonoBehaviour
 
     void Start()
     {
-        gameSession = FindObjectOfType<GameSession>();
         sceneLoader = FindObjectOfType<SceneLoader>();
+        gameSession = FindObjectOfType<GameSession>();
         Time.timeScale = gameSpeed;
         PickLayout();
         blockLayoutList[currentLayoutIndex].SetActive(true);
     }
 
+
+   
+
+    //Layout Functions
     public void PickLayout()
     {
-        if (gameSession.GetLevelCount() <= blockLayoutList.Length) //if current stage lower than or equal to number of layout
-        { currentLayoutIndex = gameSession.GetLevelCount() - 1; }
-        else if (!lostALife)  { currentLayoutIndex = UnityEngine.Random.Range(0, blockLayoutList.Length); }
+        if (GameSession.levelCount <= blockLayoutList.Length) //if current stage lower than or equal to number of layout
+        { currentLayoutIndex = GameSession.levelCount - 1; }
+        else if (!lostALife)  { currentLayoutIndex = Random.Range(0, blockLayoutList.Length); }
     }
 
 
     //Combo Functions
     public int GetCombo() { return comboCount; }
-
     public void ComboIncrease()
     { 
         comboCount++;
         gameSession.UpdateHighCombo(comboCount);
     }
-
     public void ComboReset() { comboCount = 0; }
 
-    
 
     //Block Functions
     public void AddBlock() { breakableBlocks++; }
-    public void BlockDestroyed() 
+    public void SubstractBlock() 
     {
         breakableBlocks--; 
-        if (breakableBlocks <= 0) { Time.timeScale *= winSlowMotion; sceneLoader.NextLevel(); }
+        if (breakableBlocks <= 0) {
+            FindObjectOfType<LoseCollider>().gameObject.SetActive(false);
+            Time.timeScale *= winSlowMotion; 
+            sceneLoader.NextLevel(); 
+        }
     }
 
 
     //Pause System
-    void PauseGame()
+    public void PauseGame()
     {
-        if (pauseOn)
+        if (isPaused)
         {
             Time.timeScale = gameSpeed;//unpause
-            pauseOn = false;
+            isPaused = false;
         }
         else
         {
             Time.timeScale = 0;//pause
-            pauseOn = true;
+            isPaused = true;
         }
     }
 
 
+    //At the end of a scene
     private void OnDestroy() { Time.timeScale = 1; }
 }

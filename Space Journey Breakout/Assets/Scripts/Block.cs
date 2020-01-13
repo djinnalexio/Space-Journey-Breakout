@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ public class Block : MonoBehaviour
     [Header("SFX")]
     [Space(5)]
     [SerializeField] AudioClip blockBreakSFX;
+    [SerializeField] AudioClip blockAnnihilateSFX;
 
     [Header("VFX")]
     [Space(5)]
@@ -31,8 +33,9 @@ public class Block : MonoBehaviour
     [SerializeField] [Range(0.1f, .9f)] float maxColorReduction = .6f;
 
     Level level;
-    GameSession game;
+    GameSession gameSession;
     CameraShake cameraShake;
+    PowerControl powerControl;
 
     float baseHP;
     float currentHP;
@@ -41,8 +44,9 @@ public class Block : MonoBehaviour
     void Start()
     {
         level = FindObjectOfType<Level>();
-        game = FindObjectOfType<GameSession>();
+        gameSession = FindObjectOfType<GameSession>();
         cameraShake = FindObjectOfType<CameraShake>();
+        powerControl = FindObjectOfType<PowerControl>();
         baseColor = GetComponent<SpriteRenderer>().color;
 
         if (breakable)
@@ -55,19 +59,42 @@ public class Block : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (breakable) { HandleHit(); }
+        if (breakable || powerControl.antiMatterOn) { HandleHit(); }
     }
 
     private void HandleHit()
     {
-        currentHP--;//lower HP
+        if (powerControl.wreckingBallOn) currentHP -= 2;
+        else if (powerControl.antiMatterOn) currentHP = 0;
+        else currentHP--;//lower HP
         level.ComboIncrease();
-        game.AddToScore(game.blockContactPoints * level.GetCombo());
-        if (currentHP <= 0) { DestroyBlock(); }
+        int pointsFromCollision = gameSession.PointsPerContact * level.GetCombo();
+        if (powerControl.powerOn == true) { pointsFromCollision += Mathf.RoundToInt(pointsFromCollision * powerControl.powerBonusPercent); }
+        gameSession.AddToScore(pointsFromCollision);
+        if (currentHP <= 0)
+        {
+            if (powerControl.antiMatterOn) StartCoroutine(AnnihilateBlock());
+            else if (breakable) DestroyBlock();
+        }
         else { CrackBlock(); DarkenBlock(); }
+    }        
+        
+    
+
+    IEnumerator AnnihilateBlock()
+    {
+        if (blockAnnihilateSFX) { AudioSource.PlayClipAtPoint(blockAnnihilateSFX, Camera.main.transform.position); }//play sound effect if it's there
+        Destroy(gameObject.GetComponent<Collider2D>());
+        while (gameObject.transform.localScale.x > powerControl.blockErasePoint)
+        {
+            gameObject.transform.localScale -= gameObject.transform.localScale * powerControl.blockMeltingRate * Time.deltaTime;
+            yield return Time.deltaTime;
+        }
+        if (breakable) level.SubstractBlock();
+        gameSession.AddToScore(blockPoints * level.GetCombo());
+        Destroy(gameObject);
     }
 
-    
     private void DestroyBlock()
     {
         if (blockBreakVFX != null)
@@ -86,8 +113,8 @@ public class Block : MonoBehaviour
         else Debug.LogError("Block Break Flash is missing: " + gameObject.name);
 
         cameraShake.ShakeCamera();
-        level.BlockDestroyed();
-        game.AddToScore(blockPoints * level.GetCombo());
+        level.SubstractBlock();
+        gameSession.AddToScore(blockPoints * level.GetCombo());
         Destroy(gameObject);
         if (blockBreakSFX) { AudioSource.PlayClipAtPoint(blockBreakSFX, Camera.main.transform.position); }//play sound effect if it's there
     }

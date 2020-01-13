@@ -43,7 +43,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 11
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -96,10 +96,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
-    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 1cd18a191286bd746a0cb2dcd5b97be0,
-    type: 2}
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -275,6 +273,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecfd8daa319d653429e770ce3861ddcc, type: 3}
+--- !u!114 &1952088207112956786 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3569790161908490162, guid: ecfd8daa319d653429e770ce3861ddcc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1952088207112956785}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffef14fa8ce309b4f88a70045484bbd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4550691731609571422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -351,6 +361,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 377906931, guid: ba5dc46793280244abf7f8822102121a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1952088207112956786}
     - target: {fileID: 4057549823279378658, guid: ba5dc46793280244abf7f8822102121a,
         type: 3}
       propertyPath: m_Name

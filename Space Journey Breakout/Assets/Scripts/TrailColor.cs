@@ -18,7 +18,7 @@ public class TrailColor : MonoBehaviour
     int currentPhase;
 
     Color baseColor;
-    float baseWidth;
+    public float baseWidth;
     float baseTime;
     float trailWidthIncrease;
 

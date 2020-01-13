@@ -18,24 +18,33 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float autoplayRandomOffset = 1.5f;
 
     float playerXPos;
-    float contactOffset = 0f;
+    public Vector2 GetplayerToBallVector() { return playerToBallVector; }
+    Vector2 playerToBallVector;
 
     Level level;
     GameSession gameSession;
     Ball ball;
+    PowerControl powerControl;
 
     // Start is called before the first frame update
     void Start()
     {
+        ball = FindObjectOfType<Ball>();
+        playerToBallVector = ball.transform.position - transform.position;
         level = FindObjectOfType<Level>();
         gameSession = FindObjectOfType<GameSession>();
-        ball = FindObjectOfType<Ball>();
+        powerControl = FindObjectOfType<PowerControl>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!level.pauseOn) { Move(); }
+        if (!ball) ball = FindObjectOfType<Ball>();
+
+        if (!level.isPaused) { Move(); }
+
+        if(powerControl.powerOn) gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        else gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
     }
 
     private void Move()
@@ -64,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
     private void DeviateBall(Collision2D collision)
     {
-        contactOffset = collision.GetContact(0).point.x - transform.position.x;
+        float contactOffset = collision.GetContact(0).point.x - transform.position.x;
         collision.rigidbody.velocity = new Vector2(contactOffset * offsetMultiplier, collision.rigidbody.velocity.y);
     }
 }

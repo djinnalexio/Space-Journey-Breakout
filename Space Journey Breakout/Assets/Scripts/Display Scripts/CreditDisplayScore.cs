@@ -13,14 +13,11 @@ public class CreditDisplayScore : MonoBehaviour
     [SerializeField] TextMeshProUGUI highestCombo;
     [SerializeField] TextMeshProUGUI highestLevel;
 
-    GameSession gameStatus;
-
     // Start is called before the first frame update
     void Start()
     {
-        gameStatus = FindObjectOfType<GameSession>();
-        highScore.text = gameStatus.GetPreviousHighScore().ToString("D7");
-        highestCombo.text = gameStatus.GetPreviousHighCombo().ToString();
-        highestLevel.text = gameStatus.GetPreviousHighLevel().ToString();
+        highScore.text = GameSession.previousHighScore.ToString("D7");
+        highestCombo.text = GameSession.previousHighCombo.ToString();
+        highestLevel.text = GameSession.previouslevelCount.ToString();
     }
 }

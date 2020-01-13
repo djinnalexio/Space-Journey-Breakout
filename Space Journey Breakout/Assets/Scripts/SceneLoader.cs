@@ -16,14 +16,12 @@ public class SceneLoader : MonoBehaviour
     GameSession gameSession;
     Level level;
     DisplayLifeCount displayLife;
-    Ball ball;
 
     private void Awake() 
     {
         gameSession = FindObjectOfType<GameSession>();
         level = FindObjectOfType<Level>();
         displayLife = FindObjectOfType<DisplayLifeCount>();
-        ball = FindObjectOfType<Ball>();
     }
 
 
@@ -31,7 +29,7 @@ public class SceneLoader : MonoBehaviour
     public void AppQuit() { Application.Quit(); }
     public void LoadCredits() { SceneManager.LoadScene("Credits"); }
     public void LoadInstructions() { SceneManager.LoadScene("Instructions"); }
-    public void LoadOptions() { SceneManager.LoadScene("Options"); }
+    public void LoadOptions() { SceneManager.LoadScene("Settings"); }
     public void LoadStart()
     {
         SceneManager.LoadScene(0);
@@ -62,17 +60,17 @@ public class SceneLoader : MonoBehaviour
     }
 
 
-    public void NextLife()
+    public void NextLife(Ball ball)
     {
-        if (gameSession.GetCurrentLives() <= 0) { StartCoroutine(DelayedTransition("Game Over", gameOverDelay, false)); }
+        if (GameSession.lives <= 0) { StartCoroutine(DelayedTransition("Game Over", gameOverDelay, false)); }
 
-        else if (gameSession.resetStageModeEnabled)
+        else if (!GameSession.safetyNetEnabled)
         {
             level.LostLife(true);
             StartCoroutine(DelayedTransition("Game", retryDelay, false));
         }
 
-        else { StartCoroutine(ReloadBall()); }
+        else { StartCoroutine(ReloadBall(ball)); }
     }
 
     IEnumerator DelayedTransition(string scene, float delay, bool movingToNextLevel)
@@ -82,11 +80,11 @@ public class SceneLoader : MonoBehaviour
         if (movingToNextLevel) gameSession.AddLevelPoint();
     }
 
-    IEnumerator ReloadBall()
+    IEnumerator ReloadBall(Ball ball)
     {
         yield return new WaitForSeconds(retryDelay);
         displayLife.RemoveAContainer();
-        ball.SetBallLockedStatus(true);
+        ball.lockedBall = true;
         ball.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
     }
 }
