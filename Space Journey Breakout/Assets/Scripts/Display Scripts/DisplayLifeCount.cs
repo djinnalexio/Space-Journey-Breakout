@@ -10,24 +10,20 @@ using UnityEngine;
 public class DisplayLifeCount : MonoBehaviour
 {
     [SerializeField] GameObject spareLife;
-    [SerializeField] float lifeBarSpacingY = .5f;
+    [SerializeField] float lifeIconSpacingY = .5f;
     [SerializeField] float rotationSpeed = 1f;
     [SerializeField] bool counterClockWise = false;
 
     List<BallContainer> lifeReserve;
     float direction = 1;
     
-    GameSession gameSession;    
-
     void Start()
     {
-        gameSession = FindObjectOfType<GameSession>();
-
         Vector2 basePos = spareLife.transform.position;
-        Vector2 Yshift = new Vector2(0, lifeBarSpacingY);
+        Vector2 Yshift = new Vector2(0, lifeIconSpacingY);
         int position = 0;
 
-        for (int lifeLeft = gameSession.GetCurrentLives() - 1; lifeLeft > 0; lifeLeft--)
+        for (int lifeLeft = GameSession.lives - 1; lifeLeft > 0; lifeLeft--)
         {
             GameObject reserveLife = Instantiate(spareLife, basePos + (position * Yshift), Quaternion.identity);
             reserveLife.GetComponent<BallContainer>().containerIndex = position;

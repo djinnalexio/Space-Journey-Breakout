@@ -52,6 +52,7 @@ MonoBehaviour:
   comboIndexChange: 070000000f0000001f0000003f000000
   trailTimeIncrease: 0.15
   WidthIncrementPercent: 0.9
+  baseWidth: 0
 --- !u!96 &1768386817
 TrailRenderer:
   serializedVersion: 2
@@ -67,7 +68,6 @@ TrailRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
-  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -167,10 +167,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1831606616681758801}
+  - component: {fileID: 7830970291984436790}
   - component: {fileID: 6918720416736129159}
   - component: {fileID: 1038160955138236769}
   - component: {fileID: 739620379641616448}
-  - component: {fileID: 7830970291984436790}
   m_Layer: 0
   m_Name: Fire Ball
   m_TagString: Untagged
@@ -186,13 +186,32 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190315790948637778}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16, y: 1.18, z: 0}
+  m_LocalPosition: {x: 16, y: 1.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1768386816}
   m_Father: {fileID: 4550691731576390359}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7830970291984436790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190315790948637778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098e971effebe7046ac23406fc17b426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1: {fileID: 4550691731330311087}
+  xPush: 0
+  yPush: 10
+  ballSpeed: 24
+  RandomContactFactor: 0.9
+  ballContactSounds: []
+  lockedBall: 1
 --- !u!212 &6918720416736129159
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -207,7 +226,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -258,7 +276,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -280,24 +298,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!114 &7830970291984436790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1190315790948637778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 098e971effebe7046ac23406fc17b426, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player1: {fileID: 4550691731330311087}
-  xPush: 0
-  yPush: 10
-  ballSpeed: 12
-  RandomContactFactor: 0.75
-  ballContactSounds: []
 --- !u!1 &4514689193712673852
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,8 +326,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4514689193712673852}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16, y: 0.38, z: 0}
-  m_LocalScale: {x: 4, y: 0.4, z: 1}
+  m_LocalPosition: {x: 16, y: 0.47, z: 0}
+  m_LocalScale: {x: 5, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 4550691731576390359}
   m_RootOrder: 0
@@ -347,7 +347,7 @@ MonoBehaviour:
   ScreenWidthUnits: 32
   playerRange: 6.15
   offsetMultiplier: 7
-  autoplayRandomOffset: 2
+  autoplayRandomOffset: 1.5
 --- !u!212 &3412646167530794910
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -362,7 +362,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

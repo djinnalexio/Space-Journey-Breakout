@@ -9,43 +9,42 @@ using UnityEngine;
 public class GameSession : MonoBehaviour
 {
     //Score Variables
-    [SerializeField] public int blockContactPoints = 5;
-    public int GetCurrentScore() { return currentScore; }
-    static int currentScore = 0;
-    public int GetHighScore() { return highScore; }
-    static int highScore = 0;
-    public int GetPreviousHighScore() { return previousHighScore; }
-    static int previousHighScore = 0;
+    [SerializeField] public int PointsPerContact = 5;
+    public static int currentScore = 0;
+    public static int highScore = 0;
+    public static int previousHighScore = 0;
 
 
     //Combo Variables
-    public int GetHighCombo() { return highCombo; }
-    static int highCombo = 0;
-    public int GetPreviousHighCombo() { return previousHighCombo; }
-    static int previousHighCombo = 0;
+    public static int highCombo = 0;
+    public static int previousHighCombo = 0;
 
 
     //Stage Count Variables
-    public int GetLevelCount() { return levelCount; }
-    static int levelCount = 0;
-    public int GetPreviousHighLevel() { return previouslevelCount; }
-    static int previouslevelCount = 0;
-
+    public static int levelCount = 0;
+    public static int previouslevelCount = 0;
 
     //Life Variables
-    public int GetCurrentLives() { return lives; }
-    static int lives = 0;
     [SerializeField] int baseLifeCount = 5;
-
+    public static int lives;
 
     //Autoplay Variables
     [SerializeField] public bool autoplayEnabled = false;
     [SerializeField] public bool directStart = true;
 
-
     //Lose Behaviour Variables
-    [SerializeField] public bool resetStageModeEnabled = true;
+    public static bool safetyNetEnabled = true;
+    [SerializeField] [Range(0f, 1f)] float noNetBonusPercent = .1f;
 
+    //Volume Variables
+    public static float volume = 1;
+
+    //Power-Up Variables
+    [SerializeField] int basePowerUses = 5;
+    public static int powerUses;
+    public static bool wreckingBallSet = true;
+    public static bool antiMatterSet = false;
+    public static bool partyTimeSet = false;
 
     private void Awake()
     {
@@ -61,11 +60,13 @@ public class GameSession : MonoBehaviour
     void Start()
     {
         lives = baseLifeCount;
+        powerUses = basePowerUses;
         if (directStart) levelCount = 1;
     }
 
     public void AddToScore(int points) 
-    { 
+    {
+        if (!safetyNetEnabled) points += Mathf.RoundToInt(points * noNetBonusPercent);
         currentScore += points;
         if (currentScore > highScore) { highScore = currentScore; }
     }
@@ -79,11 +80,10 @@ public class GameSession : MonoBehaviour
         highCombo = 0;
         levelCount = 0;
         lives = baseLifeCount;
+        powerUses = basePowerUses;
     }
 
     public void UpdateHighCombo(int combo) { if (combo > highCombo) { highCombo = combo; } }
 
     public void AddLevelPoint() { levelCount++; }
-
-    public void LoseLife() { lives--; }
 }

@@ -23,21 +23,18 @@ public class Ball : MonoBehaviour
     [Space(10)]
     [SerializeField] AudioClip[] ballContactSounds;
 
-
-    public void SetBallLockedStatus(bool locked) { lockedBall = locked; }
-    bool lockedBall = true;
-    Vector2 playerToBallVector;
-
+    public bool lockedBall = true;
 
     AudioSource ballAudioSource;
     GameSession gameSession;
+    PlayerController player;
 
     new Rigidbody2D rigidbody;
     
     // Start is called before the first frame update
     void Start()
     {
-        playerToBallVector = transform.position - player1.transform.position;
+        player = FindObjectOfType<PlayerController>();
         ballAudioSource = GetComponent<AudioSource>();
         gameSession = FindObjectOfType<GameSession>();
         rigidbody = GetComponent<Rigidbody2D>();
@@ -48,6 +45,7 @@ public class Ball : MonoBehaviour
     {
         if (lockedBall) { HoldBall(); LaunchBall(); }
         rigidbody.velocity = ballSpeed * (rigidbody.velocity.normalized);
+        //Debug.Log(Mathf.Abs(rigidbody.velocity.x) + Mathf.Abs(rigidbody.velocity.y));
     }
 
     private void LaunchBall()
@@ -62,7 +60,7 @@ public class Ball : MonoBehaviour
     private void HoldBall()
     {
         Vector2 player1Pos = player1.transform.position;
-        transform.position = player1Pos + playerToBallVector;
+        transform.position = player1Pos + player.GetplayerToBallVector();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
