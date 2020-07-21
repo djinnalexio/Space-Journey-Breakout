@@ -1,4 +1,4 @@
-# Block Breaker
+# Space Journey Breakout
  A Unity Block Breaker project
 
 Made by Philippe-Andre Akue.
