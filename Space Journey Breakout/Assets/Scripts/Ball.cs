@@ -3,79 +3,89 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Script that controls the ball's behavior
+/// Script that controls the ball
 /// </summary>
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] PlayerController player1;
-
-    [Header("Launch Paramaters")]
-    [SerializeField] float xPush = 5f;
-    [SerializeField] float yPush = 5f;
-    [SerializeField] public float ballSpeed = 5f;
+    [Header("Launch Parameters")]
+    [SerializeField] float ballSpeed = 5f;                                      //  The amount of units that the ball will move each second
+    [SerializeField] Vector2 startingSpot = new Vector2(16f,5f);                // distance from the bottom or the screen the ball waits
+    [SerializeField] bool lockedBall = true;                                    // is ball is currently locked in place
+    Rigidbody2D ballRig;                                                        // Rigidbody2D; component of the ball
+    
 
     [Header("Randomization")]
     [Space(10)]
-    [SerializeField] float RandomContactFactor = .2f;
+    [SerializeField] float randomContactFactor = .2f;                           // force randomly applied at each collision to prevent back and forth loops
+
 
     [Header("SFX")]
     [Space(10)]
-    [SerializeField] AudioClip[] ballContactSounds;
-
-    public bool lockedBall = true;
-
-    AudioSource ballAudioSource;
-    GameSession gameSession;
-    PlayerController player;
-
-    new Rigidbody2D rigidbody;
+    [SerializeField] AudioClip ballHit;                                         // sound when ball hits an object
+    AudioSource ballAudioSource;                                                // Audio source for sound effects
     
-    // Start is called before the first frame update
+
+    // AWAKE
+    void Awake()
+    {
+        ballRig = GetComponent<Rigidbody2D>();
+        ballAudioSource = GetComponent<AudioSource>();
+    }
+
+
+    // START
     void Start()
     {
-        player = FindObjectOfType<PlayerController>();
-        ballAudioSource = GetComponent<AudioSource>();
-        gameSession = FindObjectOfType<GameSession>();
-        rigidbody = GetComponent<Rigidbody2D>();
+        resetBall();                                                            // place the ball in starting position
     }
 
-    // Update is called once per frame
+
+    // UPDATE
     void Update()
     {
-        if (lockedBall) { HoldBall(); LaunchBall(); }
-        rigidbody.velocity = ballSpeed * (rigidbody.velocity.normalized);
-        //Debug.Log(Mathf.Abs(rigidbody.velocity.x) + Mathf.Abs(rigidbody.velocity.y));
+        if (lockedBall) { LaunchBall(); }                                       // if ball in starting position, click to launch
+        if (Input.GetMouseButtonDown(1)) { resetBall(); }                       // click at any moment to reset ball
     }
+
+
+    // FIXEDUPDATE
+    void FixedUpdate() 
+    {
+        ballRig.velocity = ballSpeed * (ballRig.velocity.normalized);           // maintains ball speed. Physics are involved so part of FixedUpdate
+    }
+
 
     private void LaunchBall()
     {
-        if (Input.GetMouseButtonDown(0) || gameSession.autoplayEnabled)
+        if (Input.GetMouseButtonDown(0))
         {
-            lockedBall = false;
-            rigidbody.AddForce(new Vector2(xPush, yPush));
+            lockedBall = false;                                                 // mark ball as unlock
+            ballRig.AddForce(Vector2.down);                                     // launch it towards the player
         }
     }
 
-    private void HoldBall()
+    public void resetBall()
     {
-        Vector2 player1Pos = player1.transform.position;
-        transform.position = player1Pos + player.GetplayerToBallVector();
+        lockedBall = true;                                                      // mark ball as unlock
+        transform.position = startingSpot;                                      // set it back to starting position
+        ballRig.velocity = Vector2.zero;                                        // set movement to zero
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (!lockedBall)
-        {
-            if (ballAudioSource)
-            {//play a random(53) contact sound (54) whenever the ball touches something(49), if there is an audio source attached to the ball(51), and if the ball has been detached from the player(51)
-                AudioClip audioClip = ballContactSounds[Random.Range(0, ballContactSounds.Length)];
-                ballAudioSource.PlayOneShot(audioClip);
-            }
 
-            Vector2 VelocityTweak = new Vector2(Random.Range(0, RandomContactFactor), Random.Range(0, RandomContactFactor));
-            rigidbody.AddForce(VelocityTweak);
-        }
-        
+    // ONCOLLISION
+    private void OnCollisionEnter2D(Collision2D solidObject)
+    {
+        ballAudioSource.PlayOneShot(ballHit);                                   // play a sound when the ball touches an object
+
+        TweakDirection();
+    }
+
+    private void TweakDirection()                                               // slightly change collision angle of the ball to prevent back and forth loops
+    {
+        Vector2 VelocityTweak = new Vector2(
+                    Random.Range(0, randomContactFactor),                       // randomly assigns X and Y values
+                    Random.Range(0, randomContactFactor));
+        ballRig.AddForce(VelocityTweak);                                        // apply tweak
     }
 }
