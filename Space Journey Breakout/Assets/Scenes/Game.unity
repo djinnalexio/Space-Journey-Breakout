@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c42954ac08b1b3b1abfb52923a76024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballSpeed: 10
+  ballSpeed: 21
   startingSpot: {x: 16, y: 5}
   lockedBall: 1
   randomContactFactor: 5
