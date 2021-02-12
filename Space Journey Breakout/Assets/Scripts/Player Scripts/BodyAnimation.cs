@@ -6,7 +6,7 @@ using UnityEngine;
 /// Script that controls the animations of the player body
 /// </summary>
 
-public class PlayerBodyAnimation : MonoBehaviour
+public class BodyAnimation : MonoBehaviour
 {
     
     private Animator bodyAnimator;                                              // Animator for the base of the player

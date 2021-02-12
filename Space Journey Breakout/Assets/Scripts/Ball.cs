@@ -11,7 +11,7 @@ public class Ball : MonoBehaviour
     [Header("Launch Parameters")]
     [SerializeField] float ballSpeed = 5f;                                      //  The amount of units that the ball will move each second
     [SerializeField] Vector2 startingSpot = new Vector2(16f,5f);                // distance from the bottom or the screen the ball waits
-    [SerializeField] bool lockedBall = true;                                    // is ball is currently locked in place
+    [SerializeField] bool lockedBall = false;                                    // is ball is currently locked in place
     Rigidbody2D ballRig;                                                        // Rigidbody2D; component of the ball
     
 
@@ -23,29 +23,29 @@ public class Ball : MonoBehaviour
     [Header("SFX")]
     [Space(10)]
     [SerializeField] AudioClip ballHit;                                         // sound when ball hits an object
-    AudioSource ballAudioSource;                                                // Audio source for sound effects
+    AudioSource ballAudio;                                                      // Audio source for sound effects
     
 
     // AWAKE
     void Awake()
     {
         ballRig = GetComponent<Rigidbody2D>();
-        ballAudioSource = GetComponent<AudioSource>();
+        ballAudio = GetComponent<AudioSource>();
     }
 
 
     // START
     void Start()
     {
-        resetBall();                                                            // place the ball in starting position
+        transform.position = startingSpot;                                      // set it back to starting position
+        ballRig.velocity = Vector2.zero;                                        // set movement to zero
     }
 
 
     // UPDATE
     void Update()
     {
-        if (lockedBall) { LaunchBall(); }                                       // if ball in starting position, click to launch
-        if (Input.GetMouseButtonDown(1)) { resetBall(); }                       // click at any moment to reset ball
+    
     }
 
 
@@ -56,27 +56,31 @@ public class Ball : MonoBehaviour
     }
 
 
-    private void LaunchBall()
+    internal void LaunchBall()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (lockedBall)
         {
             lockedBall = false;                                                 // mark ball as unlock
             ballRig.AddForce(Vector2.down);                                     // launch it towards the player
         }
     }
 
-    public void resetBall()
+    internal void resetBall()
     {
-        lockedBall = true;                                                      // mark ball as unlock
-        transform.position = startingSpot;                                      // set it back to starting position
-        ballRig.velocity = Vector2.zero;                                        // set movement to zero
+        if (!lockedBall)
+        {
+            lockedBall = true;                                                      // mark ball as unlock
+            transform.position = startingSpot;                                      // set it back to starting position
+            ballRig.velocity = Vector2.zero;                                        // set movement to zero
+        }
+        
     }
 
 
     // ONCOLLISION
     private void OnCollisionEnter2D(Collision2D solidObject)
     {
-        ballAudioSource.PlayOneShot(ballHit);                                   // play a sound when the ball touches an object
+        ballAudio.PlayOneShot(ballHit);                                         // play a sound when the ball touches an object
 
         TweakDirection();
     }

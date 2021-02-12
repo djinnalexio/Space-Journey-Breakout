@@ -26,4 +26,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/obsolete/Settings.unity
     guid: 576d6caa60a95824aa2740d45a0806a9
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 19c072b55084ef464bde2aa5e4093c37,
+      type: 2}
