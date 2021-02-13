@@ -15,8 +15,8 @@ public class BlockData : ScriptableObject
     public int blockPoints = 0;  // points awarded when block is hit
 
     [Space(10)]
-    [Tooltip("Size of this array determines the number of hits block can take")]
-    public Sprite[] blockPhases; // number of phases = # of hit points
+    [Tooltip("number of sprites = number of hits block can take")]
+    public Sprite[] blockPhases; // # of phases = # of hit points
 
     [Space(10)]
     public Color blockColor; // color for that type of block
