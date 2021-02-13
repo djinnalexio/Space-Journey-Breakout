@@ -28,13 +28,13 @@ public class PlayerMovement : MonoBehaviour
     
     void FixedUpdate()
     {
-            if (followCursorEnabled) { moveWithMouse(); } // if using mouse, follow cursor
-            else { moveWithKeys(); }    // else, use keys to move
+            if (followCursorEnabled) { MoveWithMouse(); } // if using mouse, follow cursor
+            else { MoveWithKeys(); }    // else, use keys to move
     }
 
 
 
-    void moveWithKeys()
+    void MoveWithKeys()
     {
         // record last position for calculations
         float lastPosition = transform.position.x;
@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = new Vector2(newPositionX,transform.position.y);
     }
 
-    void moveWithMouse()
+    void MoveWithMouse()
     {
         // X coordinate of the mouse limited by the dead area on either side
         float newPositionX = Mathf.Clamp(controller.input.mousePosition.x, 
