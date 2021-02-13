@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fdf10593670b6d8fa68b2477cb634a8, type: 3}
-  m_Name: B Block
+  m_Name: C_block
   m_EditorClassIdentifier: 
   breakable: 1
   blockPoints: 200
   blockPhases:
   - {fileID: 21300000, guid: 64fb70940194281e4ba36cb661404329, type: 3}
   - {fileID: 21300000, guid: 0e5309acdc77cf30b9fc955890708c31, type: 3}
-  blockColor: {r: 0, g: 0, b: 0, a: 0}
+  blockColor: {r: 0.91946447, g: 1, b: 0, a: 0}

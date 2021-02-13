@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fdf10593670b6d8fa68b2477cb634a8, type: 3}
-  m_Name: U Block
+  m_Name: S_block
   m_EditorClassIdentifier: 
   breakable: 0
   blockPoints: 500
@@ -20,4 +20,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9946db6e79b74851980fdcf42595bed7, type: 3}
   - {fileID: 21300000, guid: ad36f707186f11642bb0c7666afea714, type: 3}
   - {fileID: 21300000, guid: 0e5309acdc77cf30b9fc955890708c31, type: 3}
-  blockColor: {r: 0, g: 0, b: 0, a: 0}
+  blockColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 0}
