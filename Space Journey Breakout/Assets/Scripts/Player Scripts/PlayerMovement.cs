@@ -2,57 +2,61 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script that controls all player movement
+/// </summary>
+
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] internal float speed = 20f;
-    [SerializeField] float ScreenWidthUnits;
-    [SerializeField] float deadArea = 6.35f;                                       // Unaccessible screen area on either side
-    [SerializeField] internal bool followCursorEnabled = true;
+    
+    PlayerController controller;
+
+
+    [SerializeField] internal float speed = 20f;            // movement speed when using key inputs
+    [SerializeField] float ScreenWidthUnits;            // width of the screen in world units
+    [SerializeField] float deadArea = 6.35f;            // Unaccessible screen area on either side
+    [SerializeField] internal bool followCursorEnabled = true;     // whether mouse pointer is enabled
     
 
-
-
-    PlayerController controller;
     
     void Awake() 
     {
         controller = GetComponent<PlayerController>();
-        ScreenWidthUnits = Camera.main.transform.position.x * 2;
+        ScreenWidthUnits = Camera.main.transform.position.x * 2; // screen size = camera center position in world * 2
     }
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    
     void FixedUpdate()
     {
-            if (followCursorEnabled) { moveWithMouse(); }
-            else { moveWithKeys(); }
+            if (followCursorEnabled) { moveWithMouse(); } // if using mouse, follow cursor
+            else { moveWithKeys(); }    // else, use keys to move
     }
 
 
 
     void moveWithKeys()
     {
+        // record last position for calculations
         float lastPosition = transform.position.x;
         
+        // calculate how much player will move from key press
         float delta =  controller.input.movementInput.x * speed * Time.deltaTime;
         
+        // constraint the new position by the dead area on either side
         float newPositionX = Mathf.Clamp(lastPosition + delta, 
             deadArea, ScreenWidthUnits - deadArea);
         
+        // apply new position
         transform.position = new Vector2(newPositionX,transform.position.y);
     }
 
     void moveWithMouse()
     {
+        // X coordinate of the mouse limited by the dead area on either side
         float newPositionX = Mathf.Clamp(controller.input.mousePosition.x, 
             deadArea, ScreenWidthUnits - deadArea);
 
+        // apply new position
         transform.position = new Vector2(newPositionX, transform.position.y);
     }
 

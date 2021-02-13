@@ -12,9 +12,8 @@ public class Block : MonoBehaviour
     [SerializeField] Sprite solidBlock;
     [SerializeField] Sprite[] blockStates;
     SpriteRenderer blockRenderer;
-
-//TODO keep all getcomponent in awake and find alternatives for other cases
-
+    
+    
     [Header("SFX")]
     [Space(10)]
     [SerializeField] AudioClip blockBreakSound;

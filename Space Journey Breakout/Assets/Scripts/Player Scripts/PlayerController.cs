@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Script that controls Player movements
+/// Script that links all other player scripts
 /// </summary>
 
-//TODO separate player script into function animation, input, move
 
 //TODO keep game logic out of UI
 
@@ -15,24 +14,23 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     
+    internal PlayerInput input;         // script to read inputs 
+    internal PlayerMovement movement;           // script for all movement functions and logic
+    internal PlayerAction action;           // script for all active player logic (key press events)
+    internal PlayerPaddle paddle;           // script for all paddle physics
+    internal PlayerBodyAnimation bodyAnim;           // script for body animation
 
-    internal PlayerInput input;
-    internal PlayerMovement movement;
-    internal PlayerAction action;
-    [SerializeField] internal ballMovement ballMove;
+
+    [Header("External Scripts")]
+    [SerializeField] internal BallController ball;            // script to link to all ball functions
     
     void Awake() 
     {
         input = GetComponent<PlayerInput>();
         movement = GetComponent<PlayerMovement>();
         action = GetComponent<PlayerAction>();
+        paddle = GetComponent<PlayerPaddle>();
+        bodyAnim = GetComponent<PlayerBodyAnimation>();
     }
-
-
-
-    
-
-
-
     
 }

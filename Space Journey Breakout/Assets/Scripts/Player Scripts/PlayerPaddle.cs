@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallDeviation : MonoBehaviour
+public class PlayerPaddle : MonoBehaviour
 {
-    
-    [Header("Offset Parameters")]
+
+    PlayerController controller;
+
+    [Header("Deviation Parameters")]
     [Space(10)]
-    [SerializeField] float DeviationValue = 10f;                               // multiplier used to control deviation from contact with paddle
-    [SerializeField] PolygonCollider2D paddleCollider;                          // get collider to find in-world size of the paddle 
+    [SerializeField] float DeviationValue = 10f;               // multiplier used to control deviation from contact with paddle
+    PolygonCollider2D paddleCollider;                          // get collider to find in-world size of the paddle 
     float paddleLength;                                                           
 
 
     // AWAKE
     void Awake()
     {
-        paddleLength = paddleCollider.bounds.size.x;                            // record the horizontal size of the paddle from the collider
+        controller = GetComponent<PlayerController>();
+        paddleCollider = GetComponent<PolygonCollider2D>();
+        paddleLength = paddleCollider.bounds.size.x;        // record the horizontal size of the paddle from the collider
     }
 
 
@@ -23,7 +27,7 @@ public class BallDeviation : MonoBehaviour
     // ONCOLLISION
     private void OnCollisionEnter2D(Collision2D ball)
     {
-        DeviateBall(ball);
+        DeviateBall(ball);          //when ball touches paddle, change the ball's direction depending on where ti touched the paddle
     }
 
     private void DeviateBall(Collision2D ball)

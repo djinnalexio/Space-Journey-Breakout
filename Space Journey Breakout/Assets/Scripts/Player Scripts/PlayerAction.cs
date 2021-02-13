@@ -2,20 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// script for all active player logic (key press events)
+/// </summary>
+
 public class PlayerAction : MonoBehaviour
 {
-
     PlayerController controller;
-    [SerializeField] Ball ball;
-
 
     void Awake() 
     {
         controller = GetComponent<PlayerController>();
 
-        controller.input.controls.Player.LoadLeftPower.performed += _ => ball.LaunchBall(); // add functions from ball to buttons
-        controller.input.controls.Player.LoadRightPower.performed += _ => ball.resetBall();
+        // Add launching the ball to actions triggered by "Shoot" input
+        controller.input.controls.Player.Shoot.performed += _ => controller.ball.movement.LaunchBall();
+
+        // Add pausing the game to actions triggered by "Pause" input
+        controller.input.controls.Player.Pause.performed += _ => PauseGame();
+        
+        //TODO disable before building finished game | Link input "ResetBall" to resetting the ball
+        controller.input.controls.Player.ResetBall.performed += _ => controller.ball.movement.ResetBall();
     }
 
 
+
+
+    void PauseGame()
+    {
+        
+    }
+    
 }

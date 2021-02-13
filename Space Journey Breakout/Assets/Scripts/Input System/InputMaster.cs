@@ -73,6 +73,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Reset Ball"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""66517c36-2645-4ba6-93fe-ac8bafd9290e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -405,6 +413,28 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""LoadRightPower"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca30fa4b-58d0-4cef-aad3-91c892c9565d"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Reset Ball"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c074393-45b7-4dd4-bb76-4e1098364d55"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse"",
+                    ""action"": ""Reset Ball"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -459,6 +489,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_UsePower = m_Player.FindAction("UsePower ", throwIfNotFound: true);
         m_Player_LoadLeftPower = m_Player.FindAction("LoadLeftPower", throwIfNotFound: true);
         m_Player_LoadRightPower = m_Player.FindAction("LoadRightPower", throwIfNotFound: true);
+        m_Player_ResetBall = m_Player.FindAction("Reset Ball", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -515,6 +546,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_UsePower;
     private readonly InputAction m_Player_LoadLeftPower;
     private readonly InputAction m_Player_LoadRightPower;
+    private readonly InputAction m_Player_ResetBall;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -526,6 +558,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @UsePower => m_Wrapper.m_Player_UsePower;
         public InputAction @LoadLeftPower => m_Wrapper.m_Player_LoadLeftPower;
         public InputAction @LoadRightPower => m_Wrapper.m_Player_LoadRightPower;
+        public InputAction @ResetBall => m_Wrapper.m_Player_ResetBall;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -556,6 +589,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @LoadRightPower.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLoadRightPower;
                 @LoadRightPower.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLoadRightPower;
                 @LoadRightPower.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLoadRightPower;
+                @ResetBall.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnResetBall;
+                @ResetBall.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnResetBall;
+                @ResetBall.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnResetBall;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -581,6 +617,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @LoadRightPower.started += instance.OnLoadRightPower;
                 @LoadRightPower.performed += instance.OnLoadRightPower;
                 @LoadRightPower.canceled += instance.OnLoadRightPower;
+                @ResetBall.started += instance.OnResetBall;
+                @ResetBall.performed += instance.OnResetBall;
+                @ResetBall.canceled += instance.OnResetBall;
             }
         }
     }
@@ -621,5 +660,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnUsePower(InputAction.CallbackContext context);
         void OnLoadLeftPower(InputAction.CallbackContext context);
         void OnLoadRightPower(InputAction.CallbackContext context);
+        void OnResetBall(InputAction.CallbackContext context);
     }
 }

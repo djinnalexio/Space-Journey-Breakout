@@ -60,6 +60,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Reset Ball",
+                    "type": "PassThrough",
+                    "id": "66517c36-2645-4ba6-93fe-ac8bafd9290e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -390,6 +398,28 @@
                     "processors": "",
                     "groups": "Mouse",
                     "action": "LoadRightPower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ca30fa4b-58d0-4cef-aad3-91c892c9565d",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Reset Ball",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c074393-45b7-4dd4-bb76-4e1098364d55",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse",
+                    "action": "Reset Ball",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
