@@ -10,7 +10,7 @@ public class PlayerAction : MonoBehaviour
 {
     PlayerController controller;
 
-    void Awake() 
+    void Start() 
     {
         controller = GetComponent<PlayerController>();
 
