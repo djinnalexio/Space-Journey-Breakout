@@ -10,18 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fdf10593670b6d8fa68b2477cb634a8, type: 3}
-  m_Name: B_block
+  m_Name: S_block
   m_EditorClassIdentifier: 
-  breakable: 1
-  blockPoints: 300
+  breakable: 0
   blockPhases:
+  - {fileID: 21300000, guid: 013971bf8d1c394c4820c4cc6cdfa8b5, type: 3}
   - {fileID: 21300000, guid: 64fb70940194281e4ba36cb661404329, type: 3}
   - {fileID: 21300000, guid: 9946db6e79b74851980fdcf42595bed7, type: 3}
+  - {fileID: 21300000, guid: ad36f707186f11642bb0c7666afea714, type: 3}
   - {fileID: 21300000, guid: 0e5309acdc77cf30b9fc955890708c31, type: 3}
-  blockColor: {r: 1, g: 0, b: 0, a: 0}
-  blockBreakSFX: {fileID: 0}
-  blockAnnihilateSFX: {fileID: 0}
-  blockBreakVFX: {fileID: 0}
+  blockColor: {r: 0.43253827, g: 0.8490566, b: 0.8159877, a: 1}
+  blockBreakSound: {fileID: 8300000, guid: 6f02aa75e5a2fb7d59a3b6b142a92cc7, type: 3}
+  blockCrackSound: {fileID: 8300000, guid: 52550609cd2e65c1786ae33e1c40c3f2, type: 3}
+  blockBreakVFX: {fileID: 8179160318939212210, guid: 743702b7041410d44a86dad93695bb17,
+    type: 3}
   particlesTime: 1
-  blockBreakFlash: {fileID: 0}
+  blockBreakFlash: {fileID: 2808396769270954034, guid: 6980522970e502140ba8b3a669535a6a,
+    type: 3}
   flashTime: 0.1
