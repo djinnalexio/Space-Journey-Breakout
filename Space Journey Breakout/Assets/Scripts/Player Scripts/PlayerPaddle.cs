@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script for paddle logic
+/// </summary>
+
 public class PlayerPaddle : MonoBehaviour
 {
 
     PlayerController controller;
-
-    [Header("Deviation Parameters")]
-    [Space(10)]
-    [SerializeField] float DeviationValue = 10f;               // multiplier used to control deviation from contact with paddle
+    
     PolygonCollider2D paddleCollider;                          // get collider to find in-world size of the paddle 
     float paddleLength;                                                           
 
@@ -36,6 +37,6 @@ public class PlayerPaddle : MonoBehaviour
         (ball.GetContact(0).point.x - transform.position.x) / paddleLength;     // (spot of the paddle the ball touched) / length of the paddle
         
         ball.rigidbody.velocity = 
-        new Vector2(contactPoint * DeviationValue, ball.rigidbody.velocity.y);  // apply the new angle to the ball
+        new Vector2(contactPoint * controller.playerSettings.DeviationValue, ball.rigidbody.velocity.y);  // apply the new angle to the ball
     }
 }

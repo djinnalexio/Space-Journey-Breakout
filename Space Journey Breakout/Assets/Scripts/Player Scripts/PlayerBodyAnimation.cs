@@ -10,8 +10,7 @@ public class PlayerBodyAnimation : MonoBehaviour
 {
     PlayerController controller;
  
-    [SerializeField] Animator bodyAnimator;                 // Animator for the base of the player
-    [SerializeField] float sensitivity = 1;                 //sensitivity to speed
+
     bool movingToTheRight = true;                           // Direction of the paddle
     float playerXDelta = 0f;                                // Speed of the player
     float lastPlayerXPosition = 0f;                         // position on the previous frame to calculate speed
@@ -37,7 +36,8 @@ public class PlayerBodyAnimation : MonoBehaviour
         lastPlayerXPosition = transform.position.x;
 
         // set the animator parameter to recorded speed and add multiplier
-        bodyAnimator.SetFloat("Speed", Mathf.Abs(playerXDelta * sensitivity * 100f));
+        controller.bodyAnimator.SetFloat("Speed",
+        Mathf.Abs(playerXDelta * controller.playerSettings.sensitivity * 100f));
         
         if (
             (playerXDelta > 0 && !movingToTheRight) // if the player is moving to the right but the body is facing left...

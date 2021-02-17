@@ -25,8 +25,6 @@ public class PlayerAction : MonoBehaviour
     }
 
 
-
-
     void PauseGame()
     {
         

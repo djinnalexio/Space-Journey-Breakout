@@ -11,25 +11,25 @@ using UnityEngine;
 public class BlockData : ScriptableObject
 {
     [Header("Block Settings")]
-    [SerializeField] internal bool breakable = true;    // if block can be broken
+    [SerializeField] internal bool breakable = true;            // if block can be broken
 
     [Space(5)]
     [Tooltip("number of sprites = number of hits block can take")]
-    [SerializeField] internal Sprite[] blockPhases; // # of phases = # of hit points
+    [SerializeField] internal Sprite[] blockPhases;             // # of phases = # of hit points
 
     [Space(5)]
-    [SerializeField] internal Color blockColor; // color for that type of block
+    [SerializeField] internal Color blockColor;                 // color for that type of block
 
     [Header("Block SFX")]
     [Space(10)]
-    [SerializeField] internal AudioClip blockBreakSound;
-    [SerializeField] internal AudioClip blockCrackSound;
+    [SerializeField] internal AudioClip blockBreakSound;        // sound when block breaks
+    [SerializeField] internal AudioClip blockCrackSound;        // sound when block only cracks
 
     [Header("Block VFX")]
     [Space(10)]
-    [SerializeField] internal GameObject blockBreakVFX;
-    [SerializeField] internal float particlesTime = 1f;
-    [SerializeField] internal GameObject blockBreakFlash;
-    [SerializeField] internal float flashTime = .1f;
+    [SerializeField] internal GameObject blockBreakVFX;         // particle system for broken block dust
+    [SerializeField] internal float particlesTime = 1f;         // time effect lingers
+    [SerializeField] internal GameObject blockBreakFlash;       // flash when block breaks
+    [SerializeField] internal float flashTime = .1f;            // time flash lasts
     
 }

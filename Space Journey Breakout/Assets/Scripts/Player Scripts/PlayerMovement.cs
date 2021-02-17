@@ -11,13 +11,8 @@ public class PlayerMovement : MonoBehaviour
     
     PlayerController controller;
 
-
-    [SerializeField] internal float speed = 20f;            // movement speed when using key inputs
-    [SerializeField] float ScreenWidthUnits;            // width of the screen in world units
-    [SerializeField] float deadArea = 6.35f;            // Unaccessible screen area on either side
-    [SerializeField] internal bool followCursorEnabled = true;     // whether mouse pointer is enabled
+    float ScreenWidthUnits;            // width of the screen in world units
     
-
     
     void Awake() 
     {
@@ -28,7 +23,8 @@ public class PlayerMovement : MonoBehaviour
     
     void FixedUpdate()
     {
-            if (followCursorEnabled) { MoveWithMouse(); } // if using mouse, follow cursor
+            if (controller.playerSettings.followCursorEnabled)
+            { MoveWithMouse(); } // if using mouse, follow cursor
             else { MoveWithKeys(); }    // else, use keys to move
     }
 
@@ -40,11 +36,11 @@ public class PlayerMovement : MonoBehaviour
         float lastPosition = transform.position.x;
         
         // calculate how much player will move from key press
-        float delta =  controller.input.movementInput.x * speed * Time.deltaTime;
+        float delta =  controller.input.movementInput.x * controller.playerSettings.speed * Time.deltaTime;
         
         // constraint the new position by the dead area on either side
         float newPositionX = Mathf.Clamp(lastPosition + delta, 
-            deadArea, ScreenWidthUnits - deadArea);
+            controller.playerSettings.deadArea, ScreenWidthUnits - controller.playerSettings.deadArea);
         
         // apply new position
         transform.position = new Vector2(newPositionX,transform.position.y);
@@ -54,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // X coordinate of the mouse limited by the dead area on either side
         float newPositionX = Mathf.Clamp(controller.input.mousePosition.x, 
-            deadArea, ScreenWidthUnits - deadArea);
+            controller.playerSettings.deadArea, ScreenWidthUnits - controller.playerSettings.deadArea);
 
         // apply new position
         transform.position = new Vector2(newPositionX, transform.position.y);
